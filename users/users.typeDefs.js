@@ -1,6 +1,12 @@
 import { gql } from "apollo-server";
 
 export default gql`
+  type LoginResult {
+    ok: Boolean!
+    token: String
+    error: String
+  }
+
   type User {
     id: Int!
     firstName: String!
@@ -25,5 +31,6 @@ export default gql`
       password: String!
     ): User
     deleteUser(username: String!): User
+    login(username: String!, password: String!): LoginResult!
   }
 `;
