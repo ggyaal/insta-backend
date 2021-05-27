@@ -1,8 +1,8 @@
-import client from "../../client";
+import { Resolvers } from "../../types";
 
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    deleteUser: async (_, { username }) => {
+    deleteUser: async (_, { username }, { client }) => {
       const deletedUser = await client.user.delete({ where: { username } });
       if (deletedUser.id) {
         return { ok: true };
@@ -12,3 +12,5 @@ export default {
     },
   },
 };
+
+export default resolvers;
