@@ -7,7 +7,15 @@ const resolvers: Resolvers = {
     editUser: protectedResolver(
       async (
         _,
-        { firstName, lastName, username, email, password: newPassword },
+        {
+          firstName,
+          lastName,
+          username,
+          email,
+          bio,
+          avatar,
+          password: newPassword,
+        },
         { loggedInUser, client }
       ) => {
         let hashingPassword = null;
@@ -21,6 +29,8 @@ const resolvers: Resolvers = {
             lastName,
             username,
             email,
+            bio,
+            avatar,
             ...(newPassword && { password: hashingPassword }),
           },
         });
