@@ -12,3 +12,13 @@ export const getUser = async (token) => {
     return null;
   }
 };
+
+export const protectedResolver = (resolver) => (root, args, context, info) => {
+  if (!context.loggedInUser) {
+    return {
+      ok: false,
+      error: "did not login.",
+    };
+  }
+  return resolver(root, args, context, info);
+};
