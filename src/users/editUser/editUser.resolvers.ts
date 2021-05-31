@@ -1,3 +1,4 @@
+import { createWriteStream } from "fs";
 import * as bcrypt from "bcrypt";
 import { Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
@@ -18,6 +19,19 @@ const resolvers: Resolvers = {
         },
         { loggedInUser, client }
       ) => {
+        let avatarUrl = null;
+        if (avatar) {
+          const { filename, createReadStream } = await avatar;
+          const newFileName = Date.now() + filename;
+          const readStream = createReadStream();
+          console.log(readStream);
+          const writeStream = createWriteStream(
+            process.cwd() + "/uploads/" + newFileName
+          );
+          readStream.pipe(writeStream);
+          avatarUrl = `http://localhost:4000/static/${newFileName}`;
+        }
+
         let hashingPassword = null;
         if (newPassword) {
           hashingPassword = await bcrypt.hash(newPassword, 10);
@@ -30,8 +44,8 @@ const resolvers: Resolvers = {
             username,
             email,
             bio,
-            avatar,
             ...(newPassword && { password: hashingPassword }),
+            ...(avatarUrl && { avatar: avatarUrl }),
           },
         });
 
