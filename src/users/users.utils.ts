@@ -1,8 +1,14 @@
 import * as jwt from "jsonwebtoken";
 import client from "../client";
-import { Context, Resolver } from "../types";
+import {
+  Context,
+  MutationResolver,
+  Resolver,
+  Resolvers,
+  Result,
+} from "../types";
 
-export const getUser = async (token) => {
+export const getUser = async (token?: string) => {
   try {
     if (!token) return null;
     const verifiedToken: any = await jwt.verify(token, process.env.SECRET_KEY);
@@ -18,7 +24,7 @@ export const getUser = async (token) => {
 };
 
 export const protectedResolver =
-  (resolver: Resolver) => (root, args, context: Context, info) => {
+  (resolver: MutationResolver) => (root, args, context: Context, info) => {
     if (!context.loggedInUser) {
       return {
         ok: false,
@@ -27,3 +33,8 @@ export const protectedResolver =
     }
     return resolver(root, args, context, info);
   };
+
+export const existedUser = async (username: string): Promise<boolean> => {
+  const existedCount = await client.user.count({ where: { username } });
+  return Boolean(existedCount);
+};

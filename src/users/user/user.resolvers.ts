@@ -1,6 +1,6 @@
 import { Resolvers } from "../../types";
 
-const resolvers: Resolvers = {
+const resolver: Resolvers = {
   Query: {
     user: (_, { username }, { client }) =>
       client.user.findUnique({
@@ -9,4 +9,4 @@ const resolvers: Resolvers = {
   },
 };
 
-export default resolvers;
+export default resolver;
