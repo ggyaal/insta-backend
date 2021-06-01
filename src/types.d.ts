@@ -14,22 +14,15 @@ export type Result = {
   totalPages?: number;
 };
 
-export type MutationResolver = (
-  root: any,
-  args?: any,
-  context?: Context,
-  info?: any
-) => Promise<Result> | Result;
-
 export type Resolver = (
   root: any,
   args?: any,
   context?: Context,
   info?: any
-) => Promise<User> | Promise<User[]>;
+) => any;
 
 export type Resolvers = {
   [key: string]: {
-    [key: string]: Resolver | MutationResolver;
+    [key: string]: Resolver;
   };
 };
