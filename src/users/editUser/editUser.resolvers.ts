@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
 import { Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
-import { uploadPhoto } from "../../shared/shared.utils";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
       ) => {
         let avatarUrl = null;
         if (avatar) {
-          avatarUrl = await uploadPhoto(avatar, loggedInUser.id);
+          avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avators");
         }
 
         let hashingPassword = null;

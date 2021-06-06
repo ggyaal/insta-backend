@@ -12,4 +12,11 @@ export default gql`
     users: [User]
     totalPages: Int
   }
+
+  type PhotoResult {
+    ok: Boolean!
+    error: String
+    photo: Photo
+    photos: [Photo]
+  }
 `;
