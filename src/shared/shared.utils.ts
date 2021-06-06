@@ -26,3 +26,13 @@ export const uploadToS3 = async (
     .promise();
   return Location;
 };
+
+export const deleteFromS3 = async (fileUrl: string, folderName: string) => {
+  const filename = fileUrl.split(`/${folderName}/`)[1];
+  const ok = await new AWS.S3()
+    .deleteObject({
+      Bucket: `ggyaastargram/${folderName}`,
+      Key: filename,
+    })
+    .promise();
+};
