@@ -6,9 +6,7 @@ const resolvers: Resolvers = {
       client.user.count({ where: { following: { some: { id } } } }),
     totalFollowing: ({ id }, _, { client }) =>
       client.user.count({ where: { followers: { some: { id } } } }),
-    isMe: ({ id }, _, { loggedInUser }) => {
-      return id === loggedInUser?.id;
-    },
+    isMe: ({ id }, _, { loggedInUser }) => id === loggedInUser?.id,
     isFollowed: async ({ id }, _, { loggedInUser, client }) => {
       if (!loggedInUser) return false;
       const exist = await client.user.count({

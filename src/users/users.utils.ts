@@ -20,6 +20,10 @@ export const getUser = async (token?: string) => {
 export const protectedResolver =
   (resolver: Resolver) => (root, args, context: Context, info) => {
     if (!context.loggedInUser) {
+      const {
+        operation: { operation },
+      } = info;
+      if (operation === "query") return null;
       return {
         ok: false,
         error: "did not login.",
