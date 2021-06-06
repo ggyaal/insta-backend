@@ -1,7 +1,7 @@
-import { createWriteStream } from "fs";
 import * as bcrypt from "bcrypt";
 import { Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
+import { uploadPhoto } from "../../shared/shared.utils";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -21,15 +21,7 @@ const resolvers: Resolvers = {
       ) => {
         let avatarUrl = null;
         if (avatar) {
-          const { filename, createReadStream } = await avatar;
-          const newFileName = Date.now() + filename;
-          const readStream = createReadStream();
-          console.log(readStream);
-          const writeStream = createWriteStream(
-            process.cwd() + "/uploads/" + newFileName
-          );
-          readStream.pipe(writeStream);
-          avatarUrl = `http://localhost:4000/static/${newFileName}`;
+          avatarUrl = await uploadPhoto(avatar, loggedInUser.id);
         }
 
         let hashingPassword = null;

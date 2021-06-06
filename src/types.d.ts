@@ -26,3 +26,10 @@ export type Resolvers = {
     [key: string]: Resolver;
   };
 };
+
+export type PhotoFile = {
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  createReadStream: Function;
+};

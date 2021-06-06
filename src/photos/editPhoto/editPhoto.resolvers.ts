@@ -1,6 +1,6 @@
 import { Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-import { getHashtags } from "../photos.util";
+import { getHashtags } from "../photos.utils";
 
 const resolvers: Resolvers = {
   Mutation: {
