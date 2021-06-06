@@ -3,8 +3,14 @@ import { gql } from "apollo-server-express";
 export default gql`
   type Result {
     ok: Boolean!
-    token: String
     error: String
+  }
+
+  type UsersResult {
+    ok: Boolean!
+    error: String
+    users: [User]
+    totalPages: Int
   }
 
   type User {
@@ -23,16 +29,5 @@ export default gql`
     totalFollowing: Int!
     isMe: Boolean!
     isFollowed: Boolean!
-  }
-
-  type UsersResult {
-    ok: Boolean!
-    error: String
-    users: [User]
-    totalPages: Int
-  }
-
-  type Query {
-    users: [User]
   }
 `;
