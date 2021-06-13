@@ -118,3 +118,4 @@ dist
 .prettierignore
 
 uploads
+build
