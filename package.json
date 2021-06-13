@@ -9,8 +9,7 @@
     "preinstall": "npx npm-force-resolutions",
     "build": "tsc",
     "prebuild": "rm -rf build",
-    "start": "node build/server",
-    "prestart": "yarn build"
+    "start": "node build/server"
   },
   "repository": {
     "type": "git",
