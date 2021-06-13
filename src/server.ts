@@ -1,7 +1,7 @@
 require("dotenv").config();
-import * as http from "http";
-import * as express from "express";
-import * as logger from "morgan";
+import http from "http";
+import express from "express";
+import logger from "morgan";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema";
 import client from "./client";
@@ -15,8 +15,11 @@ const apollo = new ApolloServer({
   resolvers,
   context: async (ctx) => {
     if (ctx.req) {
+      const {
+        req: { headers },
+      } = ctx;
       return {
-        loggedInUser: await getUser(ctx.req.headers.token),
+        loggedInUser: await getUser(headers.token as string),
         client,
         pubSub,
       };
