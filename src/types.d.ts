@@ -1,9 +1,11 @@
 import { PrismaClient } from ".prisma/client";
 import { User } from ".prisma/client";
+import { PubSub } from "apollo-server-express";
 
 type Context = {
   loggedInUser?: User;
   client: PrismaClient;
+  pubSub?: PubSub;
 };
 
 export type Result = {
@@ -24,6 +26,14 @@ export type Resolver = (
 export type Resolvers = {
   [key: string]: {
     [key: string]: Resolver;
+  };
+};
+
+export type SubScriptionResolvers = {
+  [key: string]: {
+    [key: string]: {
+      [key: string]: Resolver;
+    };
   };
 };
 

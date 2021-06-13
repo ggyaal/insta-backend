@@ -1,10 +1,15 @@
+import { NEW_MESSAGE } from "../../constants";
 import { Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
 
 const resolvers: Resolvers = {
   Mutation: {
     sendMessage: protectedResolver(
-      async (_, { payload, roomId, userId }, { loggedInUser, client }) => {
+      async (
+        _,
+        { payload, roomId, userId },
+        { loggedInUser, client, pubSub }
+      ) => {
         let room = null;
         if (userId) {
           const sentUser = await client.user.findUnique({
@@ -28,13 +33,16 @@ const resolvers: Resolvers = {
           });
           if (!room) return { ok: false, error: "Not Founded Room." };
         }
-        await client.message.create({
+        const message = await client.message.create({
           data: {
             payload,
             user: { connect: { id: loggedInUser.id } },
             room: { connect: { id: room.id } },
           },
         });
+
+        pubSub.publish(NEW_MESSAGE, { roomUpdates: { ...message } });
+
         return { ok: true };
       }
     ),
