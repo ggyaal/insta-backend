@@ -1,6 +1,9 @@
 {
   "name": "insta-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.16.1"
+  },
   "description": "instagram clone -backend",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server --ext ts,js",
