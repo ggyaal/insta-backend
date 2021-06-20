@@ -11,6 +11,19 @@ const resolvers: Resolvers = {
     comments: ({ id }, _, { client }) =>
       client.comment.count({ where: { photoId: id } }),
     isMine: ({ userId }, _, { loggedInUser }) => userId === loggedInUser?.id,
+    isLiked: async ({ id }, _, { loggedInUser, client }) => {
+      const like = await client.like.findUnique({
+        where: {
+          userId_photoId: {
+            userId: loggedInUser.id,
+            photoId: id,
+          },
+        },
+        select: { id: true },
+      });
+      console.log(like);
+      return Boolean(like);
+    },
   },
   Hashtag: {
     photos: ({ id }, { page }, { client }) =>
