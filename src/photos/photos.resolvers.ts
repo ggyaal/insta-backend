@@ -9,6 +9,11 @@ const resolvers: Resolvers = {
     likes: ({ id }, _, { client }) =>
       client.like.count({ where: { photoId: id } }),
     comments: ({ id }, _, { client }) =>
+      client.comment.findMany({
+        where: { photoId: id },
+        include: { user: true },
+      }),
+    commentCount: ({ id }, _, { client }) =>
       client.comment.count({ where: { photoId: id } }),
     isMine: ({ userId }, _, { loggedInUser }) => userId === loggedInUser?.id,
     isLiked: async ({ id }, _, { loggedInUser, client }) => {
