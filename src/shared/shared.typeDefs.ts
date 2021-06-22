@@ -6,6 +6,12 @@ export default gql`
     error: String
   }
 
+  type IdResult {
+    id: Int!
+    ok: Boolean!
+    error: String
+  }
+
   type UsersResult {
     ok: Boolean!
     error: String

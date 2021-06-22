@@ -10,14 +10,14 @@ const resolvers: Resolvers = {
           select: { id: true },
         });
         if (!photo) return { ok: true, error: "Don't existed Photo." };
-        await client.comment.create({
+        const newComment = await client.comment.create({
           data: {
             payload,
             user: { connect: { id: loggedInUser.id } },
             photo: { connect: { id } },
           },
         });
-        return { ok: true };
+        return { ok: true, id: newComment.id };
       }
     ),
   },
