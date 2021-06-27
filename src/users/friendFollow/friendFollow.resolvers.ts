@@ -3,7 +3,7 @@ import { protectedResolver } from "../users.utils";
 
 const resolvers: Resolvers = {
   Query: {
-    togetherFollow: protectedResolver(
+    friendFollow: protectedResolver(
       (_, { username }, { loggedInUser, client }) =>
         client.user.findMany({
           where: {
