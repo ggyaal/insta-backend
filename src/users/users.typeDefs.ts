@@ -9,13 +9,14 @@ export default gql`
     email: String!
     bio: String
     avatar: String
-    createdAt: String!
-    updatedAt: String!
+    photos(offset: Int): [Photo]
     followers: [User]
     following: [User]
     totalFollowers: Int!
     totalFollowing: Int!
     isMe: Boolean!
     isFollowed: Boolean!
+    createdAt: String!
+    updatedAt: String!
   }
 `;
